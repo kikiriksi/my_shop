@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ products.category }}</title>
+</head>
+<body>
+    {% for product in products %}
+        <img src="{{ product.image.url }}" width="200px" height="150px">
+        {{ product.name }}
+        {{ product.price }}
+    {% endfor %}
+</body>
+</html>

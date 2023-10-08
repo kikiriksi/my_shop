@@ -2,7 +2,9 @@ from django.db import models
 
 
 class Category(models.Model):
+    '''Модель категорий товаров'''
     name = models.CharField(verbose_name='Название категории', max_length=30)
+    image = models.ImageField(verbose_name='Изображение товара', upload_to='product/categories')
     slug = models.SlugField(verbose_name='Слаг категории', max_length=100, unique=True)
 
     class Meta:
@@ -15,6 +17,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    '''Модель товаров'''
     name = models.CharField(verbose_name='Название товара', max_length=30)
     description = models.TextField(verbose_name='Описание товара')
     quantity = models.PositiveIntegerField(verbose_name='Количество товара')
@@ -27,11 +30,10 @@ class Product(models.Model):
                                  verbose_name='Категория',
                                  related_name='products',
                                  on_delete=models.CASCADE)
-
+    def __str__(self):
+        return self.name
     class Meta:
         ordering = ('name',)
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
-    def __str__(self):
-        return self.name, self.quantity

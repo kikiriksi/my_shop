@@ -7,7 +7,7 @@
 <body>
 <h1>Все товары</h1>
     {% for categori in categories %}
-        <a href="{% url 'product_slug' categori.id %}">{{ categori.name }}</a>
+        <a href="{% url 'Product_category_one' categori.id %}">{{ categori.name }}</a>
         <img src="{{ categori.image.url }}" width="200px" height="150px">
     {% endfor %}
 </body>

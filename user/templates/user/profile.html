@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <form action="{% url 'user:profile' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Поменять данные</button>
+    </form>
+</body>
+</html>

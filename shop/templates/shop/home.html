@@ -5,6 +5,7 @@
     <title>Главная страница</title>
 </head>
 <body>
+{{ user }}
 <h1>Все товары</h1>
     {% for categori in categories %}
         <a href="{% url 'Product_category_one' categori.id %}">{{ categori.name }}</a>

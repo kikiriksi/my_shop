@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import User
-from .forms import Login
+from .forms import Login, UserRegistrationForm
 from django.contrib import auth
 
 
@@ -17,3 +17,14 @@ def login(request):
     else:
         context = {'form_login': Login()}
         return render(request, 'user/login.html', context)
+
+
+def registration(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user:login')
+    else:
+        form = UserRegistrationForm()
+        return render(request, 'user/registration.html', context={'form': form})

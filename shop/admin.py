@@ -19,4 +19,4 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Basket)
 class BasketAdmin(admin.ModelAdmin):
     list_display = ['user', 'product', 'quantity']
-    list_filter = ['user','create_date_time']
+    list_filter = ['user', 'create_date_time']

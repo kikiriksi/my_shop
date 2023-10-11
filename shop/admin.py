@@ -14,3 +14,9 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name']
     list_filter = ['name']
     prepopulated_fields = {'slug': ('name',)}
+
+
+@admin.register(Basket)
+class BasketAdmin(admin.ModelAdmin):
+    list_display = ['user', 'product', 'quantity']
+    list_filter = ['user','create_date_time']

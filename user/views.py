@@ -49,3 +49,9 @@ def profile(request):
             return redirect('user:profile')
     form = UserProfileForm(instance=request.user)
     return render(request, 'user/profile.html', context={'form': form})
+
+
+def logout(request):
+    '''выход пользователя из профиля'''
+    auth.logout(request)
+    return redirect('home')

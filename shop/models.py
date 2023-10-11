@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import User
 
 
 class Category(models.Model):
@@ -30,10 +31,22 @@ class Product(models.Model):
                                  verbose_name='Категория',
                                  related_name='products',
                                  on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name
+
     class Meta:
         ordering = ('name',)
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
+
+class Basket(models.Model):
+    '''Модель корзины'''
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(default=0)
+    create_date_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Имя пользователя:{self.user} | Продукт {self.product}'

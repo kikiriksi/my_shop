@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from .models import User
 from .forms import Login, UserRegistrationForm, UserProfileForm
-from django.contrib import auth
+from django.contrib import auth, messages
+from django.http import HttpResponseRedirect
 
 
 def login(request):
+    '''авторизация пользователя'''
     if request.method == 'POST':
         form = Login(data=request.POST)
         if form.is_valid():
@@ -13,26 +15,35 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)
-                return redirect('home')
+                return HttpResponseRedirect(reverse('home'))
+        else:
+            context = {'form_login': Login(data=request.POST)}
+            return render(request, 'user/login.html', context)
     else:
         context = {'form_login': Login()}
         return render(request, 'user/login.html', context)
 
 
 def registration(request):
+    '''Регистрация пользователя'''
     if request.method == 'POST':
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Регистрация успешна!!!')
             return redirect('user:login')
+        else:
+            form = UserRegistrationForm(data=request.POST)
+            return render(request, 'user/registration.html', context={'form': form})
     else:
         form = UserRegistrationForm()
         return render(request, 'user/registration.html', context={'form': form})
 
 
 def profile(request):
+    '''Изменения данных пользователя'''
     if request.method == 'POST':
-        form = UserProfileForm(instance=request.user,data=request.POST)
+        form = UserProfileForm(instance=request.user, data=request.POST)
         if form.is_valid():
             form.save()
             return redirect('user:profile')

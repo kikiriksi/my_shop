@@ -1,4 +1,9 @@
-{% if bascet %}
+{% if baskets %}
+    {% for basket in baskets %}
+        {{ basket.product.name }}<br>
+        {{ basket.product.description }}<br>
+        <input type="number" value="{{ basket.quantity }}" min="0">
+    {% endfor %}
 {% else %}
     <p>Корзина пустая</p>
 {% endif %}

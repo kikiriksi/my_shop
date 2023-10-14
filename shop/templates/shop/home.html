@@ -8,7 +8,7 @@
     {{ user }}
     {% if user.is_authenticated %}
         {% include 'shop/basket.html' %}
-        <a href="{% url 'user:logout' %}">Выход из пользователя</a>
+        <br><a href="{% url 'user:logout' %}">Выход из пользователя</a><br>
     {% endif %}
     <h1>Все товары</h1>
     {% for categori in categories %}

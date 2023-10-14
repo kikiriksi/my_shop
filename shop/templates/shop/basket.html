@@ -6,6 +6,7 @@
         <p>стоимость товара {{ basket.sum }}</p>
         <a href="{% url 'basket_remove' basket.id %}"> удалить товар из корзины</a>
     {% endfor %}
+    <h3>Общая стоимость товара = {{ baskets.total_sum }}</h3>
 {% else %}
     <p>Корзина пустая</p>
 {% endif %}

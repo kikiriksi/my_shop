@@ -41,14 +41,22 @@ class Product(models.Model):
         verbose_name_plural = 'Товары'
 
 
+class BasketQS(models.QuerySet):
+    def total_sum(self):
+        return sum(basket.sum() for basket in self)
+
+
 class Basket(models.Model):
     '''Модель корзины'''
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(default=0)
     create_date_time = models.DateTimeField(auto_now_add=True)
+    objects = BasketQS.as_manager()
 
     def __str__(self):
         return f'Имя пользователя:{self.user} | Продукт {self.product}'
+
     def sum(self):
+        '''метод вычисляющий стомость товаров'''
         return self.product.price * self.quantity

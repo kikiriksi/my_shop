@@ -42,6 +42,7 @@ class Product(models.Model):
 
 
 class BasketQS(models.QuerySet):
+    '''Добавляет возможность к objects считывать стоимость всей корзины'''
     def total_sum(self):
         return sum(basket.sum() for basket in self)
 

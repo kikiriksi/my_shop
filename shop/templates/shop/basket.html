@@ -3,6 +3,7 @@
         {{ basket.product.name }}<br>
         {{ basket.product.description }}<br>
         <input type="number" value="{{ basket.quantity }}" min="0">
+        <a href="{% url 'basket_remove' basket.id %}"> удалить товар из корзины</a>
     {% endfor %}
 {% else %}
     <p>Корзина пустая</p>

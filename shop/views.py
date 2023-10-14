@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views import View
+
+import user.views
 from .models import Product, Category, Basket
 from user.models import User
 from django.http import HttpResponseRedirect
@@ -12,6 +14,8 @@ class Home(View):
     def get(self, request):
         categories = Category.objects.all()
         context = {'categories': categories}
+        if request.user.username:
+            context['baskets'] = Basket.objects.filter(user=request.user)
         return render(request, 'shop/home.html', context)
 
 
@@ -34,4 +38,10 @@ def basket_add(request, product_id):
         basket = baskets.first()
         basket.quantity += 1
         basket.save()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def basket_remove(request, basket_id):
+    basket = Basket.objects.get(id=basket_id)
+    basket.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])

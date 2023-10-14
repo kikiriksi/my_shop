@@ -5,8 +5,12 @@
     <title>Главная страница</title>
 </head>
 <body>
-{{ user }}
-<h1>Все товары</h1>
+    {{ user }}
+    {% if user.is_authenticated %}
+        {% include 'shop/basket.html' %}
+        <a href="{% url 'user:logout' %}">Выход из пользователя</a>
+    {% endif %}
+    <h1>Все товары</h1>
     {% for categori in categories %}
         <a href="{% url 'Product_category_one' categori.id %}">{{ categori.name }}</a>
         <img src="{{ categori.image.url }}" width="200px" height="150px">

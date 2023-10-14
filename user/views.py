@@ -51,7 +51,7 @@ def profile(request):
     else:
         form = UserProfileForm(instance=request.user)
         return render(request, 'user/profile.html', context={'form': form,
-                                                             'baskets': Basket.objects.all()})
+                                                             'baskets': Basket.objects.filter(user=request.user)})
 
 
 def logout(request):

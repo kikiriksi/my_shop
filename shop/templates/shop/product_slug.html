@@ -8,8 +8,9 @@
     {% for product in products %}
         <img src="{{ product.image.url }}" width="200px" height="150px">
         {{ product.name }}
-        {{ product.price }}
+        {{ product.price }}<br>
         <a class="button" href="{% url 'basket_add' product.id %}">Добавить в карзину</a>
-    {% endfor %}
+    {% endfor %}<br>
+    <a href="/">На главную</a>
 </body>
 </html>

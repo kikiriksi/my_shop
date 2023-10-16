@@ -43,18 +43,19 @@ def registration(request):
 
 def profile(request):
     '''Изменения данных пользователя'''
-    if request.method == 'POST':
-        form = UserProfileForm(instance=request.user, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('user:profile')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = UserProfileForm(instance=request.user, data=request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('user:profile')
+        else:
+            form = UserProfileForm(instance=request.user)
+            return render(request, 'user/profile.html', context={'form': form,
+                                                                 'baskets': Basket.objects.filter(user=request.user),
+                                                                 })
     else:
-        form = UserProfileForm(instance=request.user)
-        baskets = Basket.objects.filter(user=request.user)
-        return render(request, 'user/profile.html', context={'form': form,
-                                                             'baskets': Basket.objects.filter(user=request.user),
-                                                             })
-
+        return redirect('user:login')
 
 def logout(request):
     '''выход пользователя из профиля'''
